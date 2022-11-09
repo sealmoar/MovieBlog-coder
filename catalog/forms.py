@@ -1,8 +1,9 @@
-from socket import fromshare
 from django import forms
-from django.forms import CharField, IntegerField, TextInput
+from ckeditor.widgets import CKEditorWidget
 
-class MovieForm(forms.Form):
+from catalog.models import Movie, Serie
+
+class MovieForm(forms.ModelForm):
     name = forms.CharField(
         label = "Movie's name",
         required=False,
@@ -25,19 +26,34 @@ class MovieForm(forms.Form):
             }
         ),
     )
-    calif = forms.CharField(
-        label = "Movie's calification",
+    rate = forms.IntegerField(
+        label = "Movie's Rating",
         required=False,
         widget=forms.TextInput(
             attrs={
-                "class": "movie-calif",
+                "class": "movie-rate",
                 "placeholder": "Movie's calification",
                 "required": "True",
             }
         ),
     )
+    review = forms.CharField(
+        label="Opinión de Pelicula:",
+        required=False,
+        widget=CKEditorWidget(
+            attrs={
+                "class": "movie-review",
+                "placeholder": "Escribe tu opnión de la Pelicula",
+                "required": "True",
+            }
+        ),
+    )
 
-class SerieForm(forms.Form):
+    class Meta:
+        model = Movie
+        fields = ["name", "category", "rate", "review"]
+
+class SerieForm(forms.ModelForm):
     name = forms.CharField(
         label = "serie's name",
         required=False,
@@ -60,14 +76,40 @@ class SerieForm(forms.Form):
             }
         ),
     )
-    season = forms.CharField(
-        label = "serie's season",
+    seasons = forms.IntegerField(
+        label = "serie's seasons",
         required=False,
         widget=forms.TextInput(
             attrs={
-                "class": "serie-season",
-                "placeholder": "serie's season",
+                "class": "serie-seasons",
+                "placeholder": "number of seasons",
                 "required": "True",
             }
         ),
     )
+    rate = forms.IntegerField(
+        label = "Movie's Rating",
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                "class": "serie-rate",
+                "placeholder": "Movie's calification",
+                "required": "True",
+            }
+        ),
+    )
+    review = forms.CharField(
+        label="Opinión de Serie:",
+        required=False,
+        widget=CKEditorWidget(
+            attrs={
+                "class": "serie-review",
+                "placeholder": "Escribe tu opnión de la Serie",
+                "required": "True",
+            }
+        ),
+    )
+
+    class Meta:
+        model = Serie
+        fields = ["name", "category", "seasons", "rate", "review"]

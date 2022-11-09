@@ -7,14 +7,16 @@ from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template import loader
+from django.forms.models import model_to_dict
 
 from catalog.forms import MovieForm, SerieForm
-from catalog.models import Movie, Serie
+from catalog.models import Movie
+from catalog.models import Serie
 
 
 def get_movies(request):
-    movie = movie.objects.all()
-    paginator = Paginator(movie, 3)
+    movies = Movie.objects.all()
+    paginator = Paginator(movies, 3)
     page_number = request.GET.get("page")
     return paginator.get_page(page_number)
 
@@ -25,7 +27,7 @@ def create_movies(request):
         if movie_form.is_valid():
             data = movie_form.cleaned_data
             actual_objects = Movie.objects.filter(
-                name=data["name"], phone=data["category"]
+                name=data["name"], category=data["category"]
             ).count()
             if actual_objects:
                 messages.error(
@@ -33,7 +35,7 @@ def create_movies(request):
                     f"La pelicula {data['name']} - {data['category']} ya está creada",
                 )
             else:
-                movie = Movie(name=data["name"], phone=data["cateogry"],adress=data["calif"])
+                movie = Movie(name=data["name"], category=data["cateogry"],rate=data["rate"], review=data["review"])
                 movie.save()
                 messages.success(
                     request,
@@ -61,8 +63,8 @@ def movies(request):
     )
 
 def get_series(request):
-    serie = serie.objects.all()
-    paginator = Paginator(serie, 3)
+    series = Serie.objects.all()
+    paginator = Paginator(series, 3)
     page_number = request.GET.get("page")
     return paginator.get_page(page_number)
 
@@ -73,7 +75,7 @@ def create_series(request):
         if serie_form.is_valid():
             data = serie_form.cleaned_data
             actual_objects = Serie.objects.filter(
-                name=data["name"], phone=data["category"]
+                name=data["name"], category=data["category"]
             ).count()
             if actual_objects:
                 messages.error(
@@ -81,7 +83,7 @@ def create_series(request):
                     f"La serie {data['name']} - {data['category']} ya está creada",
                 )
             else:
-                serie = Serie(name=data["name"], phone=data["cateogry"],adress=data["seasons"])
+                serie = Serie(name=data["name"], category=data["cateogry"],seasons=data["seasons"], rate=data["rate"], review=data["review"])
                 serie.save()
                 messages.success(
                     request,
