@@ -31,7 +31,7 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                         <li class="nav-item"><a class="nav-link" href="#page-top">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#portfolio">Catalogo</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'catalog:movie-list' %}">Movies</a></li>
                         <li class="nav-item"><a class="nav-link" href="#about">Reviews</a></li>
                         <li class="nav-item"><a class="nav-link" href="#team">LogIn</a></li>
                         <li class="nav-item"><a class="nav-link" href="#contact">Profile</a></li>
@@ -43,50 +43,23 @@
         <header class="masthead">
             <div class="container">
                 <div class="masthead-heading text-uppercase">welcome to our movie blog!</div>
-                <a class="btn btn-primary btn-xl text-uppercase" href="#services">Find Movies & Series</a>
+                <a class="btn btn-primary btn-xl text-uppercase" href="{% url 'catalog:movie-add' %}"" href="#catalogue" >Find Movies & Series</a>
             </div>
         </header>
         <!--SERVICIOS Y POSIBILIDADES DENTRO DEL BLOG (guia rapida para usuarios)-->
-        <section class="page-section" id="services">
-            <div class="container">
-                <div class="text-center">
-                    <h2 class="section-heading text-uppercase">What to do</h2>
-                    <h3 class="section-subheading text-muted">Here are your possibilities in this blog</h3>
-                </div>
-                <div class="row text-center">
-                    <div class="col-md-4">
-                        <span class="fa-stack fa-4x">
-                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                            <i class="fas fa-shopping-cart fa-stack-1x fa-inverse"></i>
-                        </span>
-                        <h4 class="my-3">Search movies or Seriess</h4>
-                        <p class="text-muted">Here you could see a huge monts of movies or Seriess and their review by others Users</p>
-                    </div>
-                    <div class="col-md-4">
-                        <span class="fa-stack fa-4x">
-                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                            <i class="fas fa-laptop fa-stack-1x fa-inverse"></i>
-                        </span>
-                        <h4 class="my-3">Be a fan!</h4>
-                        <p class="text-muted">Also, you may create your own user to upload your reviews and discuss about any film you want!</p>
-                    </div>
-                    <div class="col-md-4">
-                        <span class="fa-stack fa-4x">
-                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                            <i class="fas fa-lock fa-stack-1x fa-inverse"></i>
-                        </span>
-                        <h4 class="my-3">Web Security</h4>
-                        <p class="text-muted">Your calm is our too.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+       
+        <!--CATALOGO D PELICULAS Y SERIES-->
 
-        <!--CATALOGO DE PELICULAS Y SERIES-->
         <section class="page-section bg-light" id="portfolio">
             <div class="container">
                 <div class="text-center">
-                    <h2 class="section-heading text-uppercase">Catalogue</h2>
+                    <h2 class="section-heading text-uppercase">
+                        {% block catalog_Title %}    
+                        Catalogue
+                        {% endblock %}
+
+                    </h2>
+                    {% block catalog_content %}
                     <h3 class="section-subheading text-muted">Let's watch a film</h3>
                 </div>
                 <div class="row">
@@ -100,7 +73,7 @@
                                 <img class="img-fluid" src="{% static 'home/assets/img/portfolio/1.jpg' %}" alt="..." />
                             </a>
                             <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">"Movie 1"</div>
+                                <div class="portfolio-caption-heading">"IT"</div>
                                 <div class="portfolio-caption-subheading text-muted">description about movie 1</div>
                             </div>
                         </div>
@@ -183,6 +156,7 @@
                 </div>
             </div>
         </section>
+                     {% endblock %}
         <!--STORY-LINE DE LOS CREADORES (seba x2 xd)-->
         <section class="page-section" id="about">
             <div class="container">

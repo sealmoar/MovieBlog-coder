@@ -1,12 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
+{% extends "home/index.html" %}
+{% load static %}
+{% block catalog_Title %}    
+<title>Movies</title> 
+{% endblock %}
+{% block catalog_content %}
+        {% for movie in movie_list %}
+        <!-- Post preview-->
+         <div class="post-preview">
+                <a href="{% url 'catalog:movie-list' movie.id %}">
+                    <h2 class="post-title">Pelicula: {{ movie.name }}</h2>
+                    <h3 class="post-subtitle">Categoria: {{ movie.category }}</h3>
+                </a>
+            <p class="post-meta">
+                 Recomendada por
+                    <span style="color: #0b4956;" href="">{{ movie.owner.username }}</span>
+                ( {{ movie.created_at }} )
+            </p>
+         </div>
+            <!-- Divider-->
+         <hr class="my-4" />
+        {% endfor %}
+{% endblock %}
+
 </body>
 </html>
+
+
