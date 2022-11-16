@@ -136,7 +136,7 @@ class SerieCreateView(CreateView):
 
 class SerieUpdateView(UpdateView):
     model = Serie
-    fields = ["name", "category", "seasons", "rate", "description"]
+    fields = ["name", "category", "seasons", "rate", "review"]
 
     def get_success_url(self):
         serie_id = self.kwargs["pk"]
@@ -146,3 +146,20 @@ class SerieUpdateView(UpdateView):
 class SerieDeleteView(DeleteView):
     model = Serie
     success_url = reverse_lazy("catalog:serie-list")
+
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    def post(self, request, pk):
+        serie = get_object_or_404(Movie, id=pk)
+        comment = Comment(
+            text=request.POST["comment_text"], owner=request.user, serie=serie
+        )
+        comment.save()
+        return redirect(reverse("catalog:serie-detail", kwargs={"pk": pk}))
+
+
+class CommentDeleteView(LoginRequiredMixin, DeleteView):
+    model = Comment
+
+    def get_success_url(self):
+        serie = self.object.serie
+        return reverse("catalog:serie-detail", kwargs={"pk": serie.id})

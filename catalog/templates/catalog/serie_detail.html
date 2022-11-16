@@ -1,12 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends "home/index.html" %}
+{% load static %}
+
+{% block extrahead %}
+<script>window.CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/';</script>
+{{ block.super }}
+{% endblock %}
+{% block catalog_Title %}    
+{{ serie.name }}
+{% endblock %}
+{% block catalog_content %}
+<!-- Post preview-->
+<div class="post-preview">
+    <h3 class="post-subtitle">Category: {{ serie.category }}</h3>
+    <h3 class="post-subtitle">Rate: {{ serie.rate }} of 10</h3>
+    <h3 class="post-subtitle">Temporadas: {{ serie.seasons }}</h3>
+    <p class="post-meta">
+        Recomendada por
+        <span style="color: #0b4956;" href="">{{ serie.owner.username }}</span>
+        ( {{ serie.created_at }} )
+        <br>
+        Última fecha de actualización ( {{ serie.updated_at }} )
+    </p>
+
+    <!-- Image -->
+    {% if serie.image %}
+        <div style="text-align: center;">
+            <img height="400px" src="{{ serie.image.url }}">
+        </div>
+    {% endif %}
+
+    <!-- Description -->
+    <p class="card-text" style="text-align: center;">{{ serie.review|safe }}</p> <!-- ckeditor-->
+
+    <!-- Update-Delete link only for the owner -->
+    {% if user == serie.owner or user.is_superuser %}
+        <p style="text-align: center">
+            <a href="{% url 'catalog:serie-update' serie.id %}#portfolio">
+                <i class="fa fa-pencil" style="color: #1c1c91;"></i> Editar Recomendación
+            </a>
+            &ensp; | &ensp;
+            <a href="{% url 'catalog:serie-delete' serie.id %}#portfolio">
+                <i class="fa fa-trash" style="color: #881a1a;"></i> Eliminar Curso
+            </a>
+        </p>
+    {% endif %}
     
-</body>
-</html>
+    <!-- Divider-->
+    <hr class="my-4" />
+
+    <!-- Comment creation -->
+    <form method="POST" action="{% url 'catalog:comment-create' serie.id %}">
+        {% csrf_token %}
+        {{ comment_form }}
+    <input type="submit" value="Publicar comentario">
+    </form>
+    {% if not comments %}
+        <p></p>
+    {% endif %}
+
+    <!-- Comments list -->
+    {% for comment in comments %}
+        <p> {{ comment.text }}
+            ({{ comment.owner.username }} | {{ comment.updated_at }})
+            {% if user == comment.owner or user.is_superuser %}
+            <a href="{% url 'catalog:comment-delete' comment.id %}"><i class="fa fa-trash" style="color: #881a1a;"></i></a>
+            {% endif %}
+        </p>
+    {% endfor %}
+</div>
+{% endblock %}

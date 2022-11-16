@@ -1,12 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+{% extends "home/index.html" %}
+{% load static %}
+
+<!-- ckeditor-->
+{% block extrahead %}
+<script>window.CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/';</script>
+{{ block.super }}
+{% endblock %}
+<!-- ckeditor-->
+
+{% block catalog_Title %}
+Create Serie
+{% endblock %}
+
+{% block catalog_content %}
+    <div>
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.media }} <!-- ckeditor-->
+            {{ form.as_p }}
+            <input type="submit" class="btn btn-primary" value="Guardar pelicula" />
+        </form>
+    </div>
+    <!-- Divider-->
+    <hr class="my-4" />
+{% endblock %}

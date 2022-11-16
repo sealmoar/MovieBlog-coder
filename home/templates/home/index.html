@@ -30,9 +30,10 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="#page-top">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'home:index' %}#page-top">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'catalog:movie-list' %}#portfolio">Movies</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#about">Reviews</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'catalog:serie-list' %}#portfolio">Series</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
                         <li class="nav-item"><a class="nav-link" href="#team">LogIn</a></li>
                         <li class="nav-item"><a class="nav-link" href="#contact">Profile</a></li>
                     </ul>
@@ -163,57 +164,57 @@
             <div class="container">
                 <div class="text-center">
                     <h2 class="section-heading text-uppercase">About US</h2>
-                    <h3 class="section-subheading text-muted">Our path to the success</h3>
+                    <h3 class="section-subheading text-muted">Creando MovieTracer</h3>
                 </div>
                 <ul class="timeline">
                     <li>
                         <div class="timeline-image"><img class="rounded-circle img-fluid" src="{% static 'home/assets/img/about/1.jpg' %}" alt="..." /></div>
                         <div class="timeline-panel">
                             <div class="timeline-heading">
-                                <h4>2009-2011</h4>
-                                <h4 class="subheading">Our Humble Beginnings</h4>
+                                <h4>Inicio</h4>
+                                <h4 class="subheading">Nuestros primeros pasos</h4>
                             </div>
-                            <div class="timeline-body"><p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p></div>
+                            <div class="timeline-body"><p class="text-muted">Empezamos nuestra trayectora inscribiendonos al curso de Python development de CoderHouse en donde recibimos todas las bases para desarrollar una idea!</p></div>
                         </div>
                     </li>
                     <li class="timeline-inverted">
                         <div class="timeline-image"><img class="rounded-circle img-fluid" src="{% static 'home/assets/img/about/2.jpg' %}" alt="..." /></div>
                         <div class="timeline-panel">
                             <div class="timeline-heading">
-                                <h4>March 2011</h4>
-                                <h4 class="subheading">An Agency is Born</h4>
+                                <h4>Segunda etapa</h4>
+                                <h4 class="subheading">Aprendiendo a desarrollar</h4>
                             </div>
-                            <div class="timeline-body"><p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p></div>
+                            <div class="timeline-body"><p class="text-muted">empezamos desde lo más básico del desarrollo hasta lo mas complejo, al principio parecia como llegar a un pais donde uno no habla el idioma, pero poco a poco se fueron afianzando los conocimientos!</p></div>
                         </div>
                     </li>
                     <li>
                         <div class="timeline-image"><img class="rounded-circle img-fluid" src="{% static 'home/assets/img/about/3.jpg' %}" alt="..." /></div>
                         <div class="timeline-panel">
                             <div class="timeline-heading">
-                                <h4>December 2015</h4>
-                                <h4 class="subheading">Transition to Full Service</h4>
+                                <h4>Tercera etapa</h4>
+                                <h4 class="subheading">Preparación del proyecto final</h4>
                             </div>
-                            <div class="timeline-body"><p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p></div>
+                            <div class="timeline-body"><p class="text-muted">Por cosas de la vida hicimos equipo Sebastian Moreno y Sebastian Muñoz. Facilmente logramos definir que queríamos ahcer un blog en donde la gente pudera poner reviews de las peliculas o series y su nombre sería MovieTracer!</p></div>
                         </div>
                     </li>
                     <li class="timeline-inverted">
                         <div class="timeline-image"><img class="rounded-circle img-fluid" src="{% static 'home/assets/img/about/4.jpg' %}" alt="..." /></div>
                         <div class="timeline-panel">
                             <div class="timeline-heading">
-                                <h4>July 2020</h4>
-                                <h4 class="subheading">Phase Two Expansion</h4>
+                                <h4>Proyecto final</h4>
+                                <h4 class="subheading">Desarrollando y poniendo en practica la idea</h4>
                             </div>
-                            <div class="timeline-body"><p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p></div>
+                            <div class="timeline-body"><p class="text-muted">Fue dificl empezar,vcasi no logramos iniciar el proyecto desde cero, pero después de varias noches de tropezasrce y volverse a parar logramos estabilizar y comprender mucho mejor como estructurar nuestri proyecto. Finalmente pudimos terminar algo que creemos cumple con todo lo solicitado. Esperamos les guste!</p></div>
                         </div>
                     </li>
                     <li class="timeline-inverted">
                         <div class="timeline-image">
                             <h4>
-                                Be Part
+                                
                                 <br />
-                                Of Our
+                                Continuará
                                 <br />
-                                Story!
+                                
                             </h4>
                         </div>
                     </li>
@@ -224,14 +225,14 @@
         <section class="page-section bg-light" id="team">
             <div class="container">
                 <div class="text-center">
-                    <h2 class="section-heading text-uppercase">Our Amazing Duo</h2>
-                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+                    <h2 class="section-heading text-uppercase">Desarrolladores</h2>
+                    <h3 class="section-subheading text-muted">Integrantes del equipo.</h3>
                 </div>
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="team-member">
                             <img class="mx-auto rounded-circle" src="{% static 'home/assets/img/team/1.jpg' %}" alt="..." />
-                            <h4>Parveen Anand</h4>
+                            <h4>Sebastián Moreno</h4>
                             <p class="text-muted">Lead Designer</p>
                             <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Parveen Anand Twitter Profile"><i class="fab fa-twitter"></i></a>
                             <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Parveen Anand Facebook Profile"><i class="fab fa-facebook-f"></i></a>
@@ -241,7 +242,7 @@
                     <div class="col-lg-4">
                         <div class="team-member">
                             <img class="mx-auto rounded-circle" src="{% static 'home/assets/img/team/2.jpg' %}" alt="..." />
-                            <h4>Diana Petersen</h4>
+                            <h4>Sebastián Muñoz</h4>
                             <p class="text-muted">Lead Marketer</p>
                             <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Diana Petersen Twitter Profile"><i class="fab fa-twitter"></i></a>
                             <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Diana Petersen Facebook Profile"><i class="fab fa-facebook-f"></i></a>

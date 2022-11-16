@@ -132,7 +132,7 @@ class SerieForm(forms.ModelForm):
             }
         ),
     )
-
+    image = forms.ImageField()
     class Meta:
         model = Serie
         fields = ["name", "category", "seasons", "rate", "review"]
