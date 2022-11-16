@@ -24,7 +24,9 @@ class Movie(models.Model):
             "category",
         )
         ordering = ["-created_at"]
-
+    def __str__(self):
+     return f"{self.name} | {self.category} | {self.rate}"
+     
 class Comment(models.Model):
     text = models.TextField(
         validators=[
@@ -36,8 +38,7 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-     return f"{self.name} | {self.category} | {self.rate}"
+
 
 class Serie(models.Model):
     name = models.CharField(max_length=35)

@@ -49,9 +49,32 @@ class MovieForm(forms.ModelForm):
         ),
     )
 
+    image = forms.ImageField()
+    
     class Meta:
         model = Movie
         fields = ["name", "category", "rate", "review"]
+
+class CommentForm(forms.Form):
+    comment_text = forms.CharField(
+        label="",
+        required=False,
+        max_length=500,
+        min_length=10,
+        strip=True,
+        widget=forms.Textarea(
+            attrs={
+                "class": "comment-text",
+                "placeholder": "Ingrese su comentario...",
+                "required": "True",
+                "max_length": 500,
+                "min_length": 10,
+                "rows": 2,
+                "cols": 10,
+                "style":"min-width: 100%",
+            }
+        ),
+    )
 
 class SerieForm(forms.ModelForm):
     name = forms.CharField(
