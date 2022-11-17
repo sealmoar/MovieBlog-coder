@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 
-from catalog.models import Movie
+from movie.models import Movie
 from home.forms import UserRegisterForm
 from home.forms import UserUpdateForm
 
@@ -28,7 +28,7 @@ def search(request):
     context_dict = dict()
     if search_param:
         query = Q(name__contains=search_param)
-        query.add(Q(code__contains=search_param), Q.OR)
+        query.add(Q(category__contains=search_param), Q.OR)
         movies = Movie.objects.filter(query)
         context_dict.update(
             {

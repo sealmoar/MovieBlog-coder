@@ -31,8 +31,8 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                         <li class="nav-item"><a class="nav-link" href="{% url 'home:index' %}#page-top">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'catalog:movie-list' %}#portfolio">Movies</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'catalog:serie-list' %}#portfolio">Series</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'movie:movie-list' %}#portfolio">Movies</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'serie:serie-list' %}#portfolio">Series</a></li>
                         <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
 
                         <div class="topbar.divider d-none d-sm-block"></div>
@@ -51,8 +51,8 @@
         <header class="masthead">
             <div class="container">
                 <div class="masthead-heading text-uppercase">welcome to MovieTracer!</div>
-                <a class="btn btn-primary btn-xl text-uppercase" href="{% url 'catalog:movie-add' %}#portfolio">Add Movie</a>
-                <a class="btn btn-primary btn-xl text-uppercase" href="{% url 'catalog:serie-add' %}#portfolio">Add Serie</a>
+                <a class="btn btn-primary btn-xl text-uppercase" href="{% url 'movie:movie-add' %}#portfolio">Add Movie</a>
+                <a class="btn btn-primary btn-xl text-uppercase" href="{% url 'serie:serie-add' %}#portfolio">Add Serie</a>
             </div>
         </header>
         <!--SERVICIOS Y POSIBILIDADES DENTRO DEL BLOG (guia rapida para usuarios)-->
@@ -64,104 +64,64 @@
                 <div class="text-center">
                     <h2 class="section-heading text-uppercase">
                         {% block catalog_Title %}    
-                        Catalogue
+                        Únete y empeza dejar tus Reviews
                         {% endblock %}
-
+                        <div class="container position-relative px-4 px-lg-5">
+                            <div class="row gx-4 gx-lg-5 justify-content-center">
+                                <div class="col-md-10 col-lg-8 col-xl-7">
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                            <div class="alert {{ message.tags }}" role="alert">
+                                                {{ message }}
+                                            </div>
+                                        {% endfor %}
+                                        <!-- Divider-->
+                                        <hr class="my-4" />
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
                     </h2>
                     {% block catalog_content %}
-                    <h3 class="section-subheading text-muted">Let's watch a film</h3>
+                    <h3 class="section-subheading text-muted">Busca tu pelicula o Serie</h3>
                 </div>
-                <div class="row">
-                    <div class="col-lg-4 col-sm-6 mb-4">
-                        <!--PELICULA 1-->
-                        <div class="portfolio-item">
-                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
-                                <div class="portfolio-hover">
-                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                                </div>
-                                <img class="img-fluid" src="{% static 'home/assets/img/portfolio/1.jpg' %}" alt="..." />
-                            </a>
-                            <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">"IT"</div>
-                                <div class="portfolio-caption-subheading text-muted">description about movie 1</div>
-                            </div>
+                <div class="post-preview" text-align="center">
+                    <form action="{% url 'home:search' %}" method="GET">
+                        <div>
+                            <input type="text" text-align="center" name="search_param" id="movie_name_or_category" placeholder="Buscar Peliculas..."
+                            {% if search_param %} value="{{ search_param }}" {% endif %}
+                            >
+                            <input type="submit" value="Buscar">
+                            <a style="color: blue" href="{% url 'home:index' %}"><i class="fa fa-undo"></i></a>
                         </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 mb-4">
-                        <!-- PELICULA 2-->
-                        <div class="portfolio-item">
-                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal2">
-                                <div class="portfolio-hover">
-                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                    </form>
+                    <!-- Divider-->
+                    <hr class="my-4" />
+
+                    <!-- Si hay resultados en el buscador los presenta -->
+                    {% if movies %}
+                    {% for movie in movies %}
+                        <!-- Post preview-->
+                        <div class="post-preview">
+                            <a href="{% url 'movie:movie-detail' movie.id %}#portfolio">
+                                {% if movie.image %}
+                                <div style="text-align: center;">
+                                    <img height="250px" src="{{ movie.image.url }}">
                                 </div>
-                                <img class="img-fluid" src="{% static 'home/assets/img/portfolio/2.jpg' %}" alt="..." />
+                                {% endif %}
+                                <h2 class="post-title">Este es el curso de {{ movie.name }}</h2>
+                                <h3 class="post-subtitle">Que tiene el código: {{ movie.cateogry }}</h3>
                             </a>
-                            <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">"Movie 2"</div>
-                                <div class="portfolio-caption-subheading text-muted">description about movie 2</div>
-                            </div>
+                            <p class="post-meta">
+                                Creado por
+                                <span style="color: #0b4956;" href="">{{ movie.owner.username }}</span>
+                                ( {{ movie.created_at }} )
+                            </p>
                         </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 mb-4">
-                        <!-- PELICULA 3-->
-                        <div class="portfolio-item">
-                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
-                                <div class="portfolio-hover">
-                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                                </div>
-                                <img class="img-fluid" src="{% static 'home/assets/img/portfolio/3.jpg' %}" alt="..." />
-                            </a>
-                            <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">movie 3</div>
-                                <div class="portfolio-caption-subheading text-muted">description about movie 3</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
-                        <!-- SERIE 1-->
-                        <div class="portfolio-item">
-                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal4">
-                                <div class="portfolio-hover">
-                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                                </div>
-                                <img class="img-fluid" src="{% static 'home/assets/img/portfolio/4.jpg' %}" alt="..." />
-                            </a>
-                            <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">Series 1</div>
-                                <div class="portfolio-caption-subheading text-muted">description about Series 1</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 mb-4 mb-sm-0">
-                        <!-- SERIE 2-->
-                        <div class="portfolio-item">
-                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal5">
-                                <div class="portfolio-hover">
-                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                                </div>
-                                <img class="img-fluid" src="{% static 'home/assets/img/portfolio/5.jpg' %}" alt="..." />
-                            </a>
-                            <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">Series 2</div>
-                                <div class="portfolio-caption-subheading text-muted">description about Series 2</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <!-- SERIE 3-->
-                        <div class="portfolio-item">
-                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal6">
-                                <div class="portfolio-hover">
-                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                                </div>
-                                <img class="img-fluid" src="{% static 'home/assets/img/portfolio/6.jpg' %}" alt="..." />
-                            </a>
-                            <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">Series 3</div>
-                                <div class="portfolio-caption-subheading text-muted">description about Series 3</div>
-                            </div>
-                        </div>
-                    </div>
+                        <!-- Divider-->
+                        <hr class="my-4" />
+                    {% endfor %}
+                    {% endif %}
                 </div>
             </div>
         </section>

@@ -1,0 +1,21 @@
+{% extends "home/index.html" %}
+{% load static %}
+
+{% block catalog_Title %}
+Eliminar comentario
+{% endblock %}
+
+{% block catalog_content %}
+<h1>Eliminar Comentario</h1>
+    <span class="subheading">Creado por: {{ comment.owner.first_name }} {{ comment.owner.last_name }}</span>
+
+<h3>Estás seguro de eliminar el siguiente Comentario?</h3>
+<p>{{ comment.text }}</p>
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <input class="btn btn-danger" type="submit" value="Si, eliminar.">
+    <a class="btn btn-primary" href="{% url 'movie:movie-detail' comment.movie.id %}#portfolio" >Cancelar</a>
+</form>
+
+{% endblock %}
