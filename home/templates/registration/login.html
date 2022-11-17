@@ -1,0 +1,23 @@
+{% extends "home/index.html" %}
+{% load static %}
+
+{% block catalog_Title %}
+Login
+{% endblock %}
+
+{% block catalog_content %}
+    <div class="container position-relative px-4 px-lg-5">
+        <a class="btn btn-secondary" href="{% url 'home:user-register' %}#portfolio">Registrar nuevo usuario</a>
+    </div>
+    <hr class="my-4" />
+{% if form.errors %}
+<p style="color: red">Combinación de username y password incorrecta, intenta de nuevo.</p>
+{% endif %}
+
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" class="btn btn-primary" value="Iniciar Sesión" />
+</form>
+
+{% endblock %}

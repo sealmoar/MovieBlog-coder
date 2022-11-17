@@ -53,7 +53,7 @@ class MovieForm(forms.ModelForm):
     
     class Meta:
         model = Movie
-        fields = ["name", "category", "rate", "review"]
+        fields = ["name", "category", "rate", "review", "image"]
 
 class CommentForm(forms.Form):
     comment_text = forms.CharField(
@@ -135,4 +135,4 @@ class SerieForm(forms.ModelForm):
     image = forms.ImageField()
     class Meta:
         model = Serie
-        fields = ["name", "category", "seasons", "rate", "review"]
+        fields = ["name", "category", "seasons", "rate", "review", "image"]

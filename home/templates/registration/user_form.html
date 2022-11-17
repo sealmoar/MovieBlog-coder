@@ -1,0 +1,21 @@
+{% extends "home/index.html" %}
+{% load static %}
+
+{% block catalog_Title %}
+Editar usuario
+{% endblock %}
+
+{% block catalog_content %}
+    <div class="container position-relative px-4 px-lg-5">
+        <a class="btn btn-secondary" href="{% url 'home:password-change' %}#portfolio">Cambiar Password</a>
+    </div>
+
+<h3>Usuario: {{user.username}}</h3>
+
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" class="btn btn-primary" value="Guardar usuario" />
+</form>
+
+{% endblock %}

@@ -34,10 +34,21 @@ class MovieListView(ListView):
 
 class MovieDetailView(DetailView):
     model = Movie
+    template_name = "catalog/movie_detail.html"
     fields = ["name", "category", "rate", "review"]
 
+    def get(self, request, pk):
+        movie = Movie.objects.get(id=pk)
+        comments = Comment.objects.filter(movie=movie).order_by("-updated_at")
+        comment_form = CommentForm()
+        context = {
+            "movie": movie,
+            "comments": comments,
+            "comment_form": comment_form,
+        }
+        return render(request, self.template_name, context)
 
-class MovieCreateView(CreateView):
+class MovieCreateView(LoginRequiredMixin, CreateView):
     model = Movie
     success_url = reverse_lazy("catalog:movie-list")
 
@@ -47,6 +58,7 @@ class MovieCreateView(CreateView):
     def form_valid(self, form):
         """Filter to avoid duplicate movies"""
         data = form.cleaned_data
+        form.instance.owner = self.request.user
         actual_objects = Movie.objects.filter(
             name=data["name"], category=data["category"]
         ).count()
@@ -65,9 +77,9 @@ class MovieCreateView(CreateView):
             return super().form_valid(form)
 
 
-class MovieUpdateView(UpdateView):
+class MovieUpdateView(LoginRequiredMixin, UpdateView):
     model = Movie
-    fields = ["name", "category", "rate", "review"]
+    fields = ["name", "category", "rate", "review", "image"]
 
     def get_success_url(self):
         movie_id = self.kwargs["pk"]
@@ -103,8 +115,19 @@ class SerieListView(ListView):
 
 class SerieDetailView(DetailView):
     model = Serie
-    fields = ["name", "category", "seasons", "rate", "review"]
+    template_name = "catalog/serie_detail.html"
+    fields = ["name", "category", "seasons", "rate", "review", "image"]
 
+    #def get(self, request, pk):
+    #    serie = Serie.objects.get(id=pk)
+    #    comments = Comment.objects.filter(serie=serie).order_by("-updated_at")
+     #   comment_form = CommentForm()
+      #  context = {
+       #     "serie": serie,
+        #    "comments": comments,
+         #   "comment_form": comment_form,
+        #}
+        #return render(request, self.template_name, context)
 
 class SerieCreateView(CreateView):
     model = Serie
@@ -116,6 +139,7 @@ class SerieCreateView(CreateView):
     def form_valid(self, form):
         """Filter to avoid duplicate series"""
         data = form.cleaned_data
+        form.instance.owner = self.request.user
         actual_objects = Serie.objects.filter(
             name=data["name"], category=data["category"]
         ).count()
@@ -136,7 +160,7 @@ class SerieCreateView(CreateView):
 
 class SerieUpdateView(UpdateView):
     model = Serie
-    fields = ["name", "category", "seasons", "rate", "review"]
+    fields = ["name", "category", "seasons", "rate", "review", "image"]
 
     def get_success_url(self):
         serie_id = self.kwargs["pk"]
@@ -147,19 +171,19 @@ class SerieDeleteView(DeleteView):
     model = Serie
     success_url = reverse_lazy("catalog:serie-list")
 
-class CommentCreateView(LoginRequiredMixin, CreateView):
-    def post(self, request, pk):
-        serie = get_object_or_404(Movie, id=pk)
-        comment = Comment(
-            text=request.POST["comment_text"], owner=request.user, serie=serie
-        )
-        comment.save()
-        return redirect(reverse("catalog:serie-detail", kwargs={"pk": pk}))
+#class CommentCreateView(LoginRequiredMixin, CreateView):
+ #   def post(self, request, pk):
+ #       serie = get_object_or_404(Serie, id=pk)
+  #      comment = Comment(
+   #         text=request.POST["comment_text"], owner=request.user, serie=serie
+    #    )
+     #   comment.save()
+      #  return redirect(reverse("catalog:serie-detail", kwargs={"pk": pk}))
 
 
-class CommentDeleteView(LoginRequiredMixin, DeleteView):
-    model = Comment
+#class CommentDeleteView(LoginRequiredMixin, DeleteView):
+ #   model = Comment
 
-    def get_success_url(self):
-        serie = self.object.serie
-        return reverse("catalog:serie-detail", kwargs={"pk": serie.id})
+  #  def get_success_url(self):
+   #     serie = self.object.serie
+    #    return reverse("catalog:serie-detail", kwargs={"pk": serie.id})

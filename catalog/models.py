@@ -12,7 +12,7 @@ class Movie(models.Model):
     image = models.ImageField(upload_to='movie', null =True, blank=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     comments = models.ManyToManyField(
-        User, through="Comment", related_name="comments_owned"
+        User, through="Comment", related_name="movie_comments"
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -24,6 +24,7 @@ class Movie(models.Model):
             "category",
         )
         ordering = ["-created_at"]
+        
     def __str__(self):
      return f"{self.name} | {self.category} | {self.rate}"
      
@@ -35,6 +36,10 @@ class Serie(models.Model):
     rate = models.IntegerField(null=False, blank=False)
     review = RichTextField(null=True, blank=True)
     image = models.ImageField(upload_to='serie', null =True, blank=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    #comments = models.ManyToManyField(
+    #    User, through="Comment", related_name="serie_comments"
+    #)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     #img = models.ImageField(Upload_to='img') --> PREGUNTAR
@@ -57,7 +62,10 @@ class Comment(models.Model):
         ]
     )
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-    serie = models.ForeignKey(Serie, on_delete=models.CASCADE)
+    #serie = models.ForeignKey(Serie, on_delete=models.CASCADE)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.name} | {self.category} | {self.rate}"

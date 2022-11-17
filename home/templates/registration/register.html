@@ -1,0 +1,16 @@
+{% extends "home/index.html" %}
+{% load static %}
+
+{% block catalog_Title %}
+Registrar Nuevo Usuario
+{% endblock %}
+
+{% block catalog_content %}
+
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" class="btn btn-primary" value="Registrar usuario" />
+</form>
+
+{% endblock %}
