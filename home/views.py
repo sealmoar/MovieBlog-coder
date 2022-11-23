@@ -8,6 +8,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 
 from movie.models import Movie
+from serie.models import Serie
 from home.forms import UserRegisterForm
 from home.forms import UserUpdateForm
 
@@ -30,9 +31,11 @@ def search(request):
         query = Q(name__contains=search_param)
         query.add(Q(category__contains=search_param), Q.OR)
         movies = Movie.objects.filter(query)
+        series = Serie.objects.filter(query)
         context_dict.update(
             {
                 "movies": movies,
+                "series": series,
                 "search_param": search_param,
             }
         )
